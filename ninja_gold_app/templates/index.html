@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Ninja Gold Game</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p>Your Gold:</p>
+            <p> {{ gold_total }} </p>
+        </header>
+        <div id="places">
+            <div class="place">
+                <h4>Farm</h4>
+                <p>(earns 10-20 gold coins)</p>
+                <form action="/process" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="place" value="farm">
+                    <input type="submit" class="button" value="Find Gold">
+                </form>
+            </div>
+            <div class="place">
+                <h4>Cave</h4>
+                <p>(earns 5-10 gold coins)</p>
+                <form action="/process" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="place" value="cave">
+                    <input type="submit" class="button" value="Find Gold">
+                </form>
+            </div>
+            <div class="place">
+                <h4>House</h4>
+                <p>(earns 2-5 gold coins)</p>
+                <form action="/process" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="place" value="house">
+                    <input type="submit" class="button" value="Find Gold">
+                </form>
+            </div>
+            <div class="place">
+                <h4>Casino</h4>
+                <p>(earns/takes 0-50 gold coins)</p>
+                <form action="/process" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="place" value="casino">
+                    <input type="submit" class="button" value="Find Gold">
+                </form>
+            </div>
+        </div>
+        <div id="activities">
+            <p>Activities:</p>
+            <div class="activity-screen">
+                {% for activity in request.session.activities %}
+                <p>{{activity|safe}}</p>
+                {% endfor %}
+            </div>
+            <form action="/reset" method="post" id="reset">
+                <input class="btn btn-warning" type="reset" value="Reset">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
